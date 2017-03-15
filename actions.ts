@@ -2,7 +2,7 @@ import * as types from './actionTypes';
 import {authFetch, updateTokenFromHeaders, addAuthorizationHeader, authSettings} from './index';
 import 'whatwg-fetch'
 
-export function login(email, password) {
+export function login(email: any, password: any): any {
     return function(dispatch) {
         dispatch(resetUser());
         window.fetch(authSettings.settings.apiUrl + authSettings.settings.signInPath, {
@@ -35,7 +35,7 @@ export function login(email, password) {
     }
 }
 
-export function validateToken(token) {
+export function validateToken(token: any): any {
     return function(dispatch) {
         window.fetch(authSettings.settings.apiUrl + authSettings.settings.validateTokenPath, { headers: addAuthorizationHeader({}, token) }).then(result => {
             updateTokenFromHeaders(result.headers);
@@ -56,7 +56,7 @@ export function validateToken(token) {
     }
 }
 
-export function logout() {
+export function logout(): any {
     return function(dispatch) {
         const after = () => {
             localStorage.removeItem("uid");
@@ -70,22 +70,22 @@ export function logout() {
     }
 }
 
-export function tokenDeleteSuccess() {
+export function tokenDeleteSuccess(): any {
     return { type: types.TOKEN_DELETE_SUCCESS };
 }
 
-export function tokenRefreshSuccess(token) {
+export function tokenRefreshSuccess(token: any): any {
     return { type: types.TOKEN_REFRESH_SUCCESS, token };
 }
 
-export function resetUser() {
+export function resetUser(): any {
     return { type: types.RESET_USER };
 }
 
-export function loadUserSuccess(user) {
+export function loadUserSuccess(user: any): any {
     return { type: types.LOAD_USER_SUCCESS, user };
 }
 
-export function loadUserFailed() {
+export function loadUserFailed(): any {
     return { type: types.LOAD_USER_FAILED };
 }

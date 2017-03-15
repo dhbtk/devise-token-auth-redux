@@ -1,4 +1,4 @@
-const initialState = {
+const initialState: any = {
     token: {
         uid: localStorage.getItem("uid"),
         client: localStorage.getItem("client"),
@@ -10,7 +10,7 @@ const initialState = {
 
 import * as types from './actionTypes';
 
-export function user(state = initialState.user, action) {
+export function user(state: any = initialState.user, action: any): any {
     switch(action.type) {
         case types.RESET_USER:
             return {};
@@ -23,7 +23,7 @@ export function user(state = initialState.user, action) {
     }
 }
 
-export function token(state = initialState.token, action) {
+export function token(state: any = initialState.token, action: any): any {
     switch(action.type) {
         case types.TOKEN_REFRESH_SUCCESS:
             return action.token;

@@ -1,7 +1,7 @@
 import {tokenRefreshSuccess, tokenDeleteSuccess, resetUser} from './actions';
 import 'whatwg-fetch'
 
-export const authSettings = { settings: {
+export const authSettings: any = { settings: {
     apiUrl: '',
     loginRoute: '/login',
     signInPath: '/auth/sign_in',
@@ -12,11 +12,11 @@ export const authSettings = { settings: {
     store: {}
 } };
 
-export function configureAuthentication(settings) {
+export function configureAuthentication(settings: any): any {
     authSettings.settings = Object.assign(authSettings.settings, settings);
 }
 
-export function requireAuth(nextState, replace) {
+export function requireAuth(nextState: any, replace: any): any {
     const { token } = authSettings.settings.store.getState();
     if (!token.validated) {
         replace({
@@ -26,11 +26,11 @@ export function requireAuth(nextState, replace) {
     }
 }
 
-export function addAuthorizationHeader(headers = {}, token) {
+export function addAuthorizationHeader(headers: any = {}, token: any): any {
     return Object.assign(headers, { 'access-token': token.token, uid: token.uid, client: token.client });
 }
 
-export function updateTokenFromHeaders(headers) {
+export function updateTokenFromHeaders(headers: any): any {
     const [uid, token, client] = [headers.get('uid'), headers.get('access-token'), headers.get('client')];
     const tokenData = { uid, token, client, validated: true };
     if (tokenData.token === null) {
@@ -43,7 +43,7 @@ export function updateTokenFromHeaders(headers) {
     }
 }
 
-export function authFetch(url, origOpts = {}) {
+export function authFetch(url: any, origOpts: any = {}): any {
     return new Promise((resolve, reject) => {
         const { token } = authSettings.settings.store.getState();
         if (token.validated) {
