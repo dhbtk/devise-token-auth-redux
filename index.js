@@ -1,4 +1,4 @@
-import {tokenRefreshSuccess, tokenDeleteSuccess, resetUser} from 'actions';
+import {tokenRefreshSuccess, tokenDeleteSuccess, resetUser} from './actions';
 import 'whatwg-fetch'
 
 export const authSettings = { settings: {

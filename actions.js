@@ -1,5 +1,5 @@
 import * as types from './actionTypes';
-import {authFetch, updateTokenFromHeaders, addAuthorizationHeader, authSettings} from 'index';
+import {authFetch, updateTokenFromHeaders, addAuthorizationHeader, authSettings} from './index';
 import 'whatwg-fetch'
 
 export function login(email, password) {
