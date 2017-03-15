@@ -7,7 +7,7 @@ interface ObjectConstructor {
 
 if (typeof Object.assign != 'function') {
     (function () {
-        Object.assign = function (target) {
+        Object.assign = function (target): any {
             'use strict';
             if (target === undefined || target === null) {
                 throw new TypeError('Cannot convert undefined or null to object');
@@ -35,8 +35,8 @@ export const authSettings: any = { settings: {
     signInPath: '/auth/sign_in',
     validateTokenPath: '/auth/validate_token',
     signOutPath: '/auth/sign_out',
-    pushNotice(notice) {},
-    pushError(error) {},
+    pushNotice(notice): any {},
+    pushError(error): any {},
     store: {}
 } };
 
