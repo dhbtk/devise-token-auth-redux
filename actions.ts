@@ -3,7 +3,7 @@ import {authFetch, updateTokenFromHeaders, addAuthorizationHeader, authSettings}
 import 'whatwg-fetch'
 
 export function login(email: any, password: any): any {
-    return function(dispatch) {
+    return function(dispatch: any) {
         dispatch(resetUser());
         window.fetch(authSettings.settings.apiUrl + authSettings.settings.signInPath, {
             method: 'POST',
@@ -36,7 +36,7 @@ export function login(email: any, password: any): any {
 }
 
 export function validateToken(token: any): any {
-    return function(dispatch) {
+    return function(dispatch: any) {
         window.fetch(authSettings.settings.apiUrl + authSettings.settings.validateTokenPath, { headers: addAuthorizationHeader({}, token) }).then(result => {
             updateTokenFromHeaders(result.headers);
             if (result.ok) {
@@ -57,7 +57,7 @@ export function validateToken(token: any): any {
 }
 
 export function logout(): any {
-    return function(dispatch) {
+    return function(dispatch: any) {
         const after = () => {
             localStorage.removeItem("uid");
             localStorage.removeItem("token");
