@@ -8,7 +8,7 @@ const initialState = {
     user: {},
 };
 
-import * as types from 'actionTypes';
+import * as types from './actionTypes';
 
 export function user(state = initialState.user, action) {
     switch(action.type) {
