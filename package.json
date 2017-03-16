@@ -8,6 +8,10 @@
   "author": "Eduardo Niehues",
   "license": "ISC",
   "dependencies": {
+    "@types/object-assign": "^4.0.30",
+    "@types/whatwg-fetch": "0.0.33",
+    "object-assign": "^4.1.1",
+    "typings": "^2.1.0",
     "whatwg-fetch": "^2.0.3"
   }
 }

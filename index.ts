@@ -1,66 +1,43 @@
 import {tokenRefreshSuccess, tokenDeleteSuccess, resetUser} from './actions';
 import 'whatwg-fetch'
+import * as objectAssign from 'object-assign';
 
-interface ObjectConstructor {
-    assign(target: any, ...sources: any[]): any;
-}
-
-if (typeof Object.assign != 'function') {
-    (function () {
-        Object.assign = function (target): any {
-            'use strict';
-            if (target === undefined || target === null) {
-                throw new TypeError('Cannot convert undefined or null to object');
-            }
-
-            var output = Object(target);
-            for (var index = 1; index < arguments.length; index++) {
-                var source = arguments[index];
-                if (source !== undefined && source !== null) {
-                    for (var nextKey in source) {
-                        if (source.hasOwnProperty(nextKey)) {
-                            output[nextKey] = source[nextKey];
-                        }
-                    }
-                }
-            }
-            return output;
-        };
-    })();
-}
-
-export const authSettings: any = { settings: {
-    apiUrl: '',
-    loginRoute: '/login',
-    signInPath: '/auth/sign_in',
-    validateTokenPath: '/auth/validate_token',
-    signOutPath: '/auth/sign_out',
-    pushNotice(notice): any {},
-    pushError(error): any {},
-    store: {}
-} };
+export const authSettings: any = {
+    settings: {
+        apiUrl: '',
+        loginRoute: '/login',
+        signInPath: '/auth/sign_in',
+        validateTokenPath: '/auth/validate_token',
+        signOutPath: '/auth/sign_out',
+        pushNotice(notice: any): any {
+        },
+        pushError(error: any): any {
+        },
+        store: {}
+    }
+};
 
 export function configureAuthentication(settings: any): any {
-    authSettings.settings = Object.assign(authSettings.settings, settings);
+    authSettings.settings = objectAssign(authSettings.settings, settings);
 }
 
 export function requireAuth(nextState: any, replace: any): any {
-    const { token } = authSettings.settings.store.getState();
+    const {token} = authSettings.settings.store.getState();
     if (!token.validated) {
         replace({
             pathname: authSettings.settings.loginRoute,
-            state: { nextPathname: nextState.location.pathname }
+            state: {nextPathname: nextState.location.pathname}
         });
     }
 }
 
 export function addAuthorizationHeader(headers: any = {}, token: any): any {
-    return Object.assign(headers, { 'access-token': token.token, uid: token.uid, client: token.client });
+    return objectAssign(headers, {'access-token': token.token, uid: token.uid, client: token.client});
 }
 
 export function updateTokenFromHeaders(headers: any): any {
     const [uid, token, client] = [headers.get('uid'), headers.get('access-token'), headers.get('client')];
-    const tokenData = { uid, token, client, validated: true };
+    const tokenData = {uid, token, client, validated: true};
     if (tokenData.token === null) {
         console.log('Mesmo token');
     } else {
@@ -73,10 +50,10 @@ export function updateTokenFromHeaders(headers: any): any {
 
 export function authFetch(url: any, origOpts: any = {}): any {
     return new Promise((resolve, reject) => {
-        const { token } = authSettings.settings.store.getState();
+        const {token} = authSettings.settings.store.getState();
         if (token.validated) {
-            const opts = Object.assign(origOpts, { headers: addAuthorizationHeader(origOpts.headers, token) });
-            window.fetch(url, opts).then(result => {
+            const opts = objectAssign(origOpts, {headers: addAuthorizationHeader(origOpts.headers, token)});
+            fetch(url, opts).then(result => {
                 if (result.ok) {
                     updateTokenFromHeaders(result.headers);
                     resolve(result);
@@ -84,7 +61,7 @@ export function authFetch(url: any, origOpts: any = {}): any {
                     reject(result);
                     authSettings.settings.store.dispatch(authSettings.settings.pushError("Ocorreu um erro interno no servidor. Por favor, entre em contato."));
                     result.json().then(json => console.error("HTTP 500: ", json));
-                } else if(result.status == 401) {
+                } else if (result.status == 401) {
                     reject(result);
                     authSettings.settings.store.dispatch(tokenDeleteSuccess());
                     authSettings.settings.store.dispatch(resetUser());
