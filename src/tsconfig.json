@@ -5,7 +5,7 @@
     "jsx": "react",
     "module": "commonjs",
     "noImplicitAny": true,
-    "outDir": "..",
+    "outDir": "../es6",
     "preserveConstEnums": true,
     "removeComments": true,
     "target": "ES6",
