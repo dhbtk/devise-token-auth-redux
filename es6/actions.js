@@ -1,5 +1,4 @@
 "use strict";
-
 const types = require("./actionTypes");
 const index_1 = require("./index");
 require("whatwg-fetch");
@@ -24,7 +23,8 @@ function login(email, password) {
                     dispatch(loadUserSuccess(response.data));
                     dispatch(index_1.authSettings.settings.pushNotice("Login efetuado com sucesso."));
                 }).catch(error => dispatch(loadUserFailed()));
-            } else {
+            }
+            else {
                 dispatch(tokenDeleteSuccess());
                 dispatch(loadUserFailed());
                 dispatch(index_1.authSettings.settings.pushError("Email ou senha incorretos. Por favor, corrija e tente novamente."));
@@ -42,7 +42,8 @@ function validateToken(token) {
             index_1.updateTokenFromHeaders(result.headers);
             if (result.ok) {
                 result.json().then(result => dispatch(loadUserSuccess(result.data)));
-            } else {
+            }
+            else {
                 console.log(result);
                 dispatch(tokenDeleteSuccess());
                 dispatch(loadUserFailed());

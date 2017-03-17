@@ -1,5 +1,4 @@
 "use strict";
-
 const actions_1 = require("./actions");
 require("whatwg-fetch");
 const objectAssign = require("object-assign");
@@ -10,8 +9,10 @@ exports.authSettings = {
         signInPath: '/auth/sign_in',
         validateTokenPath: '/auth/validate_token',
         signOutPath: '/auth/sign_out',
-        pushNotice(notice) {},
-        pushError(error) {},
+        pushNotice(notice) {
+        },
+        pushError(error) {
+        },
         store: {}
     }
 };
@@ -38,7 +39,8 @@ function updateTokenFromHeaders(headers) {
     const tokenData = { uid, token, client, validated: true };
     if (tokenData.token === null) {
         console.log('Mesmo token');
-    } else {
+    }
+    else {
         localStorage.setItem("uid", uid);
         localStorage.setItem("token", token);
         localStorage.setItem("client", client);
@@ -55,11 +57,13 @@ function authFetch(url, origOpts = {}) {
                 if (result.ok) {
                     updateTokenFromHeaders(result.headers);
                     resolve(result);
-                } else if (result.status == 500) {
+                }
+                else if (result.status == 500) {
                     reject(result);
                     exports.authSettings.settings.store.dispatch(exports.authSettings.settings.pushError("Ocorreu um erro interno no servidor. Por favor, entre em contato."));
                     result.json().then(json => console.error("HTTP 500: ", json));
-                } else if (result.status == 401) {
+                }
+                else if (result.status == 401) {
                     reject(result);
                     exports.authSettings.settings.store.dispatch(actions_1.tokenDeleteSuccess());
                     exports.authSettings.settings.store.dispatch(actions_1.resetUser());
@@ -69,7 +73,8 @@ function authFetch(url, origOpts = {}) {
                 console.error(error);
                 reject(error);
             });
-        } else {
+        }
+        else {
             reject("not logged in");
         }
     });

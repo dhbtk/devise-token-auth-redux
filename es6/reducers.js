@@ -1,5 +1,4 @@
 "use strict";
-
 const initialState = {
     token: {
         uid: localStorage.getItem("uid"),
@@ -7,7 +6,7 @@ const initialState = {
         token: localStorage.getItem("token"),
         validated: false
     },
-    user: {}
+    user: {},
 };
 const types = require("./actionTypes");
 function user(state = initialState.user, action) {
