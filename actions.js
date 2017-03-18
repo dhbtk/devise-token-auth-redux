@@ -1,7 +1,7 @@
 "use strict";
 
-const types = require("./actionTypes");
-const index_1 = require("./index");
+var types = require("./actionTypes");
+var index_1 = require("./index");
 require("whatwg-fetch");
 function login(email, password) {
     return function (dispatch) {
@@ -11,25 +11,31 @@ function login(email, password) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
-        }).then(result => {
+            body: JSON.stringify({ email: email, password: password })
+        }).then(function (result) {
             if (result.ok) {
-                const [uid, token, client] = [result.headers.get('uid'), result.headers.get('access-token'), result.headers.get('client')];
+                var _ref = [result.headers.get('uid'), result.headers.get('access-token'), result.headers.get('client')],
+                    uid = _ref[0],
+                    token = _ref[1],
+                    client = _ref[2];
+
                 localStorage.setItem("uid", uid);
                 localStorage.setItem("token", token);
                 localStorage.setItem("client", client);
-                const tokenData = { uid, token, client, validated: true };
+                var tokenData = { uid: uid, token: token, client: client, validated: true };
                 dispatch(tokenRefreshSuccess(tokenData));
-                result.json().then(response => {
+                result.json().then(function (response) {
                     dispatch(loadUserSuccess(response.data));
                     dispatch(index_1.authSettings.settings.pushNotice("Login efetuado com sucesso."));
-                }).catch(error => dispatch(loadUserFailed()));
+                }).catch(function (error) {
+                    return dispatch(loadUserFailed());
+                });
             } else {
                 dispatch(tokenDeleteSuccess());
                 dispatch(loadUserFailed());
                 dispatch(index_1.authSettings.settings.pushError("Email ou senha incorretos. Por favor, corrija e tente novamente."));
             }
-        }).catch(error => {
+        }).catch(function (error) {
             dispatch(tokenDeleteSuccess());
             dispatch(loadUserFailed());
         });
@@ -38,17 +44,19 @@ function login(email, password) {
 exports.login = login;
 function validateToken(token) {
     return function (dispatch) {
-        window.fetch(index_1.authSettings.settings.apiUrl + index_1.authSettings.settings.validateTokenPath, { headers: index_1.addAuthorizationHeader({}, token) }).then(result => {
+        window.fetch(index_1.authSettings.settings.apiUrl + index_1.authSettings.settings.validateTokenPath, { headers: index_1.addAuthorizationHeader({}, token) }).then(function (result) {
             index_1.updateTokenFromHeaders(result.headers);
             if (result.ok) {
-                result.json().then(result => dispatch(loadUserSuccess(result.data)));
+                result.json().then(function (result) {
+                    return dispatch(loadUserSuccess(result.data));
+                });
             } else {
                 console.log(result);
                 dispatch(tokenDeleteSuccess());
                 dispatch(loadUserFailed());
                 dispatch(index_1.authSettings.settings.pushError("Por favor, faça login novamente."));
             }
-        }).catch(error => {
+        }).catch(function (error) {
             console.log(error);
             dispatch(tokenDeleteSuccess());
             dispatch(loadUserFailed());
@@ -59,7 +67,7 @@ function validateToken(token) {
 exports.validateToken = validateToken;
 function logout() {
     return function (dispatch) {
-        const after = () => {
+        var after = function after() {
             localStorage.removeItem("uid");
             localStorage.removeItem("token");
             localStorage.removeItem("client");
@@ -76,7 +84,7 @@ function tokenDeleteSuccess() {
 }
 exports.tokenDeleteSuccess = tokenDeleteSuccess;
 function tokenRefreshSuccess(token) {
-    return { type: types.TOKEN_REFRESH_SUCCESS, token };
+    return { type: types.TOKEN_REFRESH_SUCCESS, token: token };
 }
 exports.tokenRefreshSuccess = tokenRefreshSuccess;
 function resetUser() {
@@ -84,7 +92,7 @@ function resetUser() {
 }
 exports.resetUser = resetUser;
 function loadUserSuccess(user) {
-    return { type: types.LOAD_USER_SUCCESS, user };
+    return { type: types.LOAD_USER_SUCCESS, user: user };
 }
 exports.loadUserSuccess = loadUserSuccess;
 function loadUserFailed() {
