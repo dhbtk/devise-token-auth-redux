@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-  	  "build": "tsc -p src && babel es6 -d .",
+  	  "build": "tsc -p src && babel es6 -d . --presets=es2015",
   	  "clean": "rm *.d.ts *.js"
   },
   "author": "Eduardo Niehues",

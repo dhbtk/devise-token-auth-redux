@@ -1,6 +1,6 @@
 "use strict";
 
-const initialState = {
+var initialState = {
     token: {
         uid: localStorage.getItem("uid"),
         client: localStorage.getItem("client"),
@@ -9,8 +9,11 @@ const initialState = {
     },
     user: {}
 };
-const types = require("./actionTypes");
-function user(state = initialState.user, action) {
+var types = require("./actionTypes");
+function user() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState.user;
+    var action = arguments[1];
+
     switch (action.type) {
         case types.RESET_USER:
             return {};
@@ -23,7 +26,10 @@ function user(state = initialState.user, action) {
     }
 }
 exports.user = user;
-function token(state = initialState.token, action) {
+function token() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState.token;
+    var action = arguments[1];
+
     switch (action.type) {
         case types.TOKEN_REFRESH_SUCCESS:
             return action.token;
