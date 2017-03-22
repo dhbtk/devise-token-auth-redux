@@ -9,7 +9,7 @@ const initialState = {
     user: {},
 };
 const types = require("./actionTypes");
-function user(state = initialState.user, action) {
+function user(state, action) {
     switch (action.type) {
         case types.RESET_USER:
             return {};
@@ -22,7 +22,10 @@ function user(state = initialState.user, action) {
     }
 }
 exports.user = user;
-function token(state = initialState.token, action) {
+function token(state, action) {
+    if (Object.keys(state).length === 0) {
+        state = initialState.token;
+    }
     switch (action.type) {
         case types.TOKEN_REFRESH_SUCCESS:
             return action.token;

@@ -10,7 +10,7 @@ const initialState: any = {
 
 import * as types from './actionTypes';
 
-export function user(state: any = initialState.user, action: any): any {
+export function user(state: any, action: any): any {
     switch(action.type) {
         case types.RESET_USER:
             return {};
@@ -23,7 +23,10 @@ export function user(state: any = initialState.user, action: any): any {
     }
 }
 
-export function token(state: any = initialState.token, action: any): any {
+export function token(state: any, action: any): any {
+	if(Object.keys(state).length === 0) {
+		state = initialState.token;
+	}
     switch(action.type) {
         case types.TOKEN_REFRESH_SUCCESS:
             return action.token;
