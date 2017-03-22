@@ -10,10 +10,7 @@ var initialState = {
     user: {}
 };
 var types = require("./actionTypes");
-function user() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState.user;
-    var action = arguments[1];
-
+function user(state, action) {
     switch (action.type) {
         case types.RESET_USER:
             return {};
@@ -26,10 +23,10 @@ function user() {
     }
 }
 exports.user = user;
-function token() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState.token;
-    var action = arguments[1];
-
+function token(state, action) {
+    if (Object.keys(state).length === 0) {
+        state = initialState.token;
+    }
     switch (action.type) {
         case types.TOKEN_REFRESH_SUCCESS:
             return action.token;
