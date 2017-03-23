@@ -24,7 +24,7 @@ function user(state, action) {
 }
 exports.user = user;
 function token(state, action) {
-    if (token === null || token === undefined || Object.keys(state).length === 0) {
+    if (state === null || state === undefined || Object.keys(state).length === 0) {
         state = exports.initialState.token;
     }
     switch (action.type) {
