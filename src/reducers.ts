@@ -1,4 +1,4 @@
-const initialState: any = {
+export const initialState: any = {
     token: {
         uid: localStorage.getItem("uid"),
         client: localStorage.getItem("client"),
@@ -24,7 +24,7 @@ export function user(state: any, action: any): any {
 }
 
 export function token(state: any, action: any): any {
-	if(Object.keys(state).length === 0) {
+	if(token === null || token === undefined || Object.keys(state).length === 0) {
 		state = initialState.token;
 	}
     switch(action.type) {
