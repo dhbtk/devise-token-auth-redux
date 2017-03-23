@@ -24,7 +24,7 @@ export function user(state: any, action: any): any {
 }
 
 export function token(state: any, action: any): any {
-	if(token === null || token === undefined || Object.keys(state).length === 0) {
+	if(state === null || state === undefined || Object.keys(state).length === 0) {
 		state = initialState.token;
 	}
     switch(action.type) {
