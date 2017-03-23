@@ -1,6 +1,6 @@
 "use strict";
 
-var initialState = {
+exports.initialState = {
     token: {
         uid: localStorage.getItem("uid"),
         client: localStorage.getItem("client"),
@@ -24,8 +24,8 @@ function user(state, action) {
 }
 exports.user = user;
 function token(state, action) {
-    if (Object.keys(state).length === 0) {
-        state = initialState.token;
+    if (token === null || token === undefined || Object.keys(state).length === 0) {
+        state = exports.initialState.token;
     }
     switch (action.type) {
         case types.TOKEN_REFRESH_SUCCESS:
