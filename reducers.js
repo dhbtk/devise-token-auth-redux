@@ -10,7 +10,10 @@ exports.initialState = {
     user: {}
 };
 var types = require("./actionTypes");
-function user(state, action) {
+function user() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : exports.initialState.user;
+    var action = arguments[1];
+
     switch (action.type) {
         case types.RESET_USER:
             return {};
