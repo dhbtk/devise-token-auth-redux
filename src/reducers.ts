@@ -10,7 +10,7 @@ export const initialState: any = {
 
 import * as types from './actionTypes';
 
-export function user(state: any, action: any): any {
+export function user(state: any = initialState.user, action: any): any {
     switch(action.type) {
         case types.RESET_USER:
             return {};

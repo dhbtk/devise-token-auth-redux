@@ -9,7 +9,7 @@ exports.initialState = {
     user: {},
 };
 const types = require("./actionTypes");
-function user(state, action) {
+function user(state = exports.initialState.user, action) {
     switch (action.type) {
         case types.RESET_USER:
             return {};
